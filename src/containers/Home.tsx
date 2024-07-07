@@ -9,7 +9,7 @@ const Home = () => {
                     <h3>Total Calories: {123}</h3>
                 </div>
                 <div>
-                    <NavLink className="nav-link" to="/"><Button variant="outlined">Add new meal</Button></NavLink>
+                    <NavLink className="nav-link" to="/edit"><Button variant="outlined">Add new meal</Button></NavLink>
                 </div>
             </div>
             <div style={{border: '1px solid white', padding:'10px',borderRadius:'5px'}}>
