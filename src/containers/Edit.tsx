@@ -1,6 +1,6 @@
 import { TextField, Button, MenuItem, Select, FormControl, InputLabel, Box, SelectChangeEvent } from '@mui/material';
 import {ChangeEvent, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axiosAPI from "../axios/AxiosAPI.tsx";
 
 interface Meal {
@@ -17,6 +17,16 @@ const Edit = () => {
         kcal: 0,
     });
     const navigate = useNavigate();
+    const {id} = useParams();
+
+    useEffect(() => {
+        if (id) {
+            axiosAPI.get(`/meal/${id}.json`)
+                .then(response => {
+                    setMealInfo(response.data);
+                })
+        }
+    }, [id]);
     const getReception = (event: SelectChangeEvent) => {
         setMealInfo({ ...mealInfo, reception: event.target.value});
     };
@@ -33,8 +43,12 @@ const Edit = () => {
 
     const postData = async () => {
         if(mealInfo.description.trim() !== '' && mealInfo.kcal !== null){
-            await axiosAPI.post('/meal.json',mealInfo);
-            await navigate('/')
+            if(id){
+                await axiosAPI.put(`/meal/${id}.json`,mealInfo);
+            }else{
+                await axiosAPI.post('/meal.json',mealInfo);
+                await navigate('/')
+            }
         }
     }
     return (

@@ -19,6 +19,9 @@ const App = () => {
                 <Route path="/edit" element={(
                     <Edit/>
                 )}/>
+                <Route path="/:id/edit" element={(
+                    <Edit/>
+                )}/>
             </Routes>
         </>
     )
