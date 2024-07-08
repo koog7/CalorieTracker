@@ -14,7 +14,7 @@ const Edit = () => {
     const [mealInfo, setMealInfo] = useState<Meal>({
         reception: 'Breakfast',
         description: '',
-        kcal: null,
+        kcal: 0,
     });
     const navigate = useNavigate();
     const getReception = (event: SelectChangeEvent) => {

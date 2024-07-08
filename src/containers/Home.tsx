@@ -10,14 +10,23 @@ interface Meal {
     kcal: number | null;
 }
 const Home = () => {
-    const [mealData, setMealData] = useState<Meal | null>(null);
+    const [mealData, setMealData] = useState<Meal>(null);
     useEffect(() => {
         axiosAPI.get('/meal.json')
             .then(response => {
                 setMealData(response.data);
-                console.log(mealData)
             })
     }, []);
+
+    const deleteCard = (key: string) => {
+        axiosAPI.delete(`/meal/${key}.json`).then(response => {
+            const oldMealData = { ...mealData };
+            delete oldMealData[key];
+            setMealData(oldMealData);
+            console.log('Meal successful key ' + response)
+        })
+
+    }
 
     return (
         <div>
@@ -32,7 +41,7 @@ const Home = () => {
 
             {mealData ? (
                 Object.entries(mealData).map(([key, data]) => (
-                    <Card key={key} reception={data.reception} description={data.description} kcal={data.kcal}/>
+                    <Card key={key} reception={data.reception} description={data.description} kcal={data.kcal} cardKey={key} OnDelete={deleteCard}/>
                 ))
             ) : (
                 <div>Something gone wrong... or just empty</div>
