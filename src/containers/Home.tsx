@@ -28,11 +28,18 @@ const Home = () => {
 
     }
 
+    const totalKcal = () => {
+        if (!mealData) return 0;
+        return Object.values(mealData).reduce((total, meal) => {
+            return total + (parseInt(meal.kcal, 10));
+        }, 0);
+    };
+
     return (
         <div>
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
                 <div>
-                    <h3>Total Calories: {123}</h3>
+                    <h3>Total Calories: {totalKcal()}</h3>
                 </div>
                 <div>
                     <NavLink className="nav-link" to="/edit"><Button variant="outlined">Add new meal</Button></NavLink>

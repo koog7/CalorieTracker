@@ -3,7 +3,7 @@ import {Button} from "@mui/material";
 interface CardProps{
     reception: string;
     description: string;
-    kcal: number | null;
+    kcal: string  | null;
     OnDelete: (key: string) => void;
     cardKey: string;
 }
