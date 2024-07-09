@@ -18,11 +18,11 @@ const Card: React.FC<CardProps> = ({reception , description , kcal, cardKey, OnD
     }
     return (
         <div>
-            <div style={{border: '1px solid white', padding: '10px', borderRadius: '5px', marginTop:'15px'}}>
+            <div style={{border: '1px solid white', padding: '10px', borderRadius: '5px', marginTop: '15px'}}>
                 <div className={'card'} style={{display: 'flex', alignItems: 'center'}}>
                     <div>
-                        <p>{reception}</p>
-                        <p>{description}</p>
+                        <h2>{reception}</h2>
+                        <h4>{description}</h4>
                     </div>
                     <div style={{marginLeft: 'auto'}}>
                         <p style={{marginRight: '50px', fontSize: '20px'}}>
@@ -30,8 +30,18 @@ const Card: React.FC<CardProps> = ({reception , description , kcal, cardKey, OnD
                         </p>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-                        <Button variant="contained" sx={{backgroundColor: 'green'}} onClick={navigateTo}>Edit</Button>
-                        <Button variant="contained" sx={{backgroundColor: 'red'}} onClick={() => OnDelete(cardKey)}>Delete</Button>
+                        <Button variant="outlined" sx={{
+                            color: 'green', borderColor: 'green', '&:hover': {
+                                color: 'white',
+                                borderColor: 'white',
+                            },
+                        }} onClick={navigateTo}>Edit</Button>
+                        <Button variant="outlined" sx={{
+                            color: 'red', borderColor: 'red', '&:hover': {
+                                color: 'white',
+                                borderColor: 'white',
+                            }
+                        }} onClick={() => OnDelete(cardKey)}>Delete</Button>
                     </div>
                 </div>
             </div>

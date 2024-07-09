@@ -3,7 +3,8 @@ import {NavLink} from "react-router-dom";
 import Card from "../component/Card.tsx";
 import axiosAPI from "../axios/AxiosAPI.tsx";
 import {useEffect, useState} from "react";
-
+import {toast, ToastContainer} from "react-toastify";
+import '../App.css';
 interface Meal {
     reception: string;
     description: string;
@@ -11,21 +12,27 @@ interface Meal {
 }
 const Home = () => {
     const [mealData, setMealData] = useState<Meal>(null);
+    const [loader , setLoader] = useState(false)
     useEffect(() => {
+        setLoader(true)
         axiosAPI.get('/meal.json')
             .then(response => {
                 setMealData(response.data);
             })
+        setLoader(false)
     }, []);
 
     const deleteCard = (key: string) => {
+        setLoader(true)
         axiosAPI.delete(`/meal/${key}.json`).then(response => {
-            const oldMealData = { ...mealData };
-            delete oldMealData[key];
-            setMealData(oldMealData);
-            console.log('Meal successful key ' + response)
+            if(response.status === 200){
+                const oldMealData = { ...mealData };
+                delete oldMealData[key];
+                setMealData(oldMealData);
+                toast.error('Meal deleted!');
+            }
         })
-
+        setLoader(false)
     }
 
     const totalKcal = () => {
@@ -37,6 +44,9 @@ const Home = () => {
 
     return (
         <div>
+            <div id="loader-container" style={{display: loader ? 'block' : 'none'}}>
+                <div className="loader"></div>
+            </div>
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
                 <div>
                     <h3>Total Calories: {totalKcal()}</h3>
@@ -46,9 +56,12 @@ const Home = () => {
                 </div>
             </div>
 
+            <ToastContainer/>
+
             {mealData ? (
                 Object.entries(mealData).map(([key, data]) => (
-                    <Card key={key} reception={data.reception} description={data.description} kcal={data.kcal} cardKey={key} OnDelete={deleteCard}/>
+                    <Card key={key} reception={data.reception} description={data.description} kcal={data.kcal}
+                          cardKey={key} OnDelete={deleteCard}/>
                 ))
             ) : (
                 <div>Something gone wrong... or just empty</div>
