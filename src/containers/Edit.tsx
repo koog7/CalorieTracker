@@ -129,18 +129,8 @@ const Edit = () => {
                 </Button>
             </Box>
             <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
+                autoClose={2000}
             />
-            <ToastContainer/>
             <div id="loader-container" style={{display: loader ? 'block' : 'none'}}>
                 <div className="loader"></div>
             </div>
